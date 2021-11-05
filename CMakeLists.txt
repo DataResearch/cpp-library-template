@@ -30,6 +30,7 @@ if (BUILD_TESTING)
 
   set(PROJECT_NAME_TEST §{PROJECT_NAME}_TEST)
 
+  project(${PROJECT_NAME_TEST})
   add_executable(${PROJECT_NAME_TEST})
 
   target_compile_definitions(${PROJECT_NAME_TEST} PRIVATE _USE_MATH_DEFINES=1)
