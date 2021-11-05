@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(PROJECT_NAME cpp_library_template)
-set(CMAKE_CXX_STANDARD 17)
 
 project(${PROJECT_NAME})
 add_library(${PROJECT_NAME} SHARED)
@@ -16,6 +15,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/bin"
 )
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 
 find_package(Boost)
 if(Boost_FOUND)
@@ -27,16 +27,17 @@ endif()
 option(BUILD_TESTING "providing the option BUILD_TESTING will buld the tests as well as the library" OFF)
 if (BUILD_TESTING)
 
-  set(PROJECT_NAME_TEST §{PROJECT_NAME}_TESTS)
+  enable_testing()
 
-  project(${PROJECT_NAME_TESTS})
-  add_executable(${PROJECT_NAME_TESTS})
+  add_executable(${PROJECT_NAME}_tests)
+  
+  target_compile_definitions(${PROJECT_NAME}_tests PRIVATE _USE_MATH_DEFINES=1)
+  target_sources(${PROJECT_NAME}_tests PRIVATE tests/test.cpp)
+  target_include_directories(${PROJECT_NAME}_tests PRIVATE src/include)
+  target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
 
-  target_compile_definitions(${PROJECT_NAME_TESTS} PRIVATE _USE_MATH_DEFINES=1)
-  target_sources(${PROJECT_NAME_TESTS} PRIVATE tests/test.cpp)
-  target_include_directories(${PROJECT_NAME_TESTS} PRIVATE src/include)
-
-  set_target_properties(${PROJECT_NAME_TESTS} PROPERTIES
+  set_target_properties(${PROJECT_NAME}_tests PROPERTIES CXX_STANDARD 17)
+  set_target_properties(${PROJECT_NAME}_tests PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/tests"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/tests"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/tests"
@@ -45,8 +46,8 @@ if (BUILD_TESTING)
   find_package(GTest REQUIRED)
   if(GTest_FOUND)
 
-    target_include_directories(${PROJECT_NAME_TESTS} PRIVATE ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME_TESTS} ${GTEST_LIBRARIES} pthread)
+    target_include_directories(${PROJECT_NAME}_tests PRIVATE ${GTEST_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME}_tests ${GTEST_LIBRARIES} pthread)
 
   endif()
 

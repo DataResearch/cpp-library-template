@@ -5,6 +5,8 @@ CMakeFiles
 build
 CMakeCache.txt
 cmake_install.cmake
+CTestTestfile.cmake
+Makefile
 
 # exclude documentation
 ./docs/*
