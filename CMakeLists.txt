@@ -19,7 +19,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 find_package(Boost)
 if(Boost_FOUND)
-  message(STATUS "Found Boost")
   target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
   # didn't link against boost, since for the most part it's header only.
 endif()
@@ -28,16 +27,16 @@ endif()
 option(BUILD_TESTING "providing the option BUILD_TESTING will buld the tests as well as the library" OFF)
 if (BUILD_TESTING)
 
-  set(PROJECT_NAME_TEST §{PROJECT_NAME}_TEST)
+  set(PROJECT_NAME_TEST §{PROJECT_NAME}_TESTS)
 
-  project(${PROJECT_NAME_TEST})
-  add_executable(${PROJECT_NAME_TEST})
+  project(${PROJECT_NAME_TESTS})
+  add_executable(${PROJECT_NAME_TESTS})
 
-  target_compile_definitions(${PROJECT_NAME_TEST} PRIVATE _USE_MATH_DEFINES=1)
-  target_sources(${PROJECT_NAME_TEST} PRIVATE tests/test.cpp)
-  target_include_directories(${PROJECT_NAME_TEST} PRIVATE src/include)
+  target_compile_definitions(${PROJECT_NAME_TESTS} PRIVATE _USE_MATH_DEFINES=1)
+  target_sources(${PROJECT_NAME_TESTS} PRIVATE tests/test.cpp)
+  target_include_directories(${PROJECT_NAME_TESTS} PRIVATE src/include)
 
-  set_target_properties(${PROJECT_NAME_TEST} PROPERTIES
+  set_target_properties(${PROJECT_NAME_TESTS} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/tests"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/tests"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/tests"
@@ -46,8 +45,8 @@ if (BUILD_TESTING)
   find_package(GTest REQUIRED)
   if(GTest_FOUND)
 
-    target_include_directories(${PROJECT_NAME_TEST} PRIVATE ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME_TEST} ${GTEST_LIBRARIES} pthread)
+    target_include_directories(${PROJECT_NAME_TESTS} PRIVATE ${GTEST_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME_TESTS} ${GTEST_LIBRARIES} pthread)
 
   endif()
 
