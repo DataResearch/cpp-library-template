@@ -1,0 +1,9 @@
+
+namespace company::project
+{
+
+	int function(int a, int b) {
+		return a + b;
+	}
+
+}
