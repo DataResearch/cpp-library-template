@@ -21,7 +21,6 @@ def system_error(value):
         print("Error while processing command with os.system.", "Exitcode:", exitcode, "Systemsignal:", signalcode)
         raise RuntimeError("Failed to run command.")
 
-
 def run_formatter(filepath):
     if os.path.isfile(filepath):
         command = command_template + filepath.__str__()
