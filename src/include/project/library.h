@@ -1,5 +1,8 @@
 /*!
  * This is documentation.
+ *
+ * \file This file is a root file.
+ *
  */
 namespace company::project {
 
