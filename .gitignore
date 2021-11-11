@@ -11,16 +11,16 @@ Makefile
 # exclude documentation
 ./docs/*
 docs
-.html
-.latex
-.pdf
+*.html
+*.latex
+*.pdf
 
 #exclude binary fragments
-.dll
-.so
-.a
-.lib
+*.dll
+*.so
+*.a
+*.lib
 
 # exclude visual studio files
-.sln
-.vcproj
+*.sln
+*.vcproj
